@@ -6,10 +6,12 @@ public class Exp : MonoBehaviour
 {
 
     GameObject target = null;
+    float exper = 10.0f;
 
     private void Start()
     {
         target = GameManager.INSTANCE.PLAYER;
+        exper = exper + (exper * (GameManager.INSTANCE.EXPLEVEL * 0.5f));
     }
 
     private void FixedUpdate()
@@ -27,7 +29,7 @@ public class Exp : MonoBehaviour
     {
         if(collision.CompareTag("Player"))
         {
-            collision.gameObject.GetComponent<Player>().CURRENTEXP += 10.0f;
+            collision.gameObject.GetComponent<Player>().CURRENTEXP += exper;
             GameManager.INSTANCE.EXPQUEUE.Enqueue(gameObject);
             gameObject.SetActive(false);
         }

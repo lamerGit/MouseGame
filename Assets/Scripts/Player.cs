@@ -25,6 +25,15 @@ public class Player : MonoBehaviour
     
     public GameObject LevelButtonEx=null;
 
+    private float CURRENTHP
+    {
+        get { return currentHp; }
+        set {
+            currentHp = Mathf.Clamp(value, 0, maxHp);
+            hpimage.fillAmount = currentHp / maxHp;
+
+        }
+    }
     public bool[] BUTTONBOOL
     {
         get { return ButtonBool; }
@@ -32,7 +41,11 @@ public class Player : MonoBehaviour
     }
     public float CURRENTEXP
     {
-        set { currentExp = value; }
+        set { currentExp = value;
+            Debug.Log(currentExp);
+            ExpImage.fillAmount = currentExp / maxExp;
+            LevelUp();
+        }
         get { return currentExp; }
     }
     private void Awake()
@@ -46,16 +59,12 @@ public class Player : MonoBehaviour
         
        // LevelButton1=SkilButton1.GetComponent<LevelButton>();
     }
-
-    private void FixedUpdate()
+    private void Start()
     {
-        if (Time.timeScale != 0)
-        {
-            hpimage.fillAmount = currentHp / maxHp;
-            ExpImage.fillAmount = currentExp / maxExp;
-
-            LevelUp();
-        }
+        maxHp = maxHp + (maxHp*(GameManager.INSTANCE.HEALTHLEVEL*0.5f));
+        currentHp = maxHp;
+        CURRENTEXP = 0;
+        //Debug.Log(currentHp);
     }
 
     void LevelUp()
@@ -124,7 +133,8 @@ public class Player : MonoBehaviour
     {
         if(collision.gameObject.CompareTag("Enemy"))
         {
-            currentHp -= 1.0f;
+            CURRENTHP -= 1.0f;
+            //Debug.Log(CURRENTHP);
         }
     }
 

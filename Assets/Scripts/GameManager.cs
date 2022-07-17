@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
@@ -36,6 +37,10 @@ public class GameManager : MonoBehaviour
     private bool GamePause = false;
 
     private GameObject Map = null;
+
+    private int healthLevel = 0;
+    private int attackLevel = 0;
+    private int expLevel = 0;
     public static GameManager INSTANCE
     {
         get
@@ -44,6 +49,21 @@ public class GameManager : MonoBehaviour
         }
     }
 
+
+    public int HEALTHLEVEL
+    {
+        get { return healthLevel; }
+    }
+
+    public int ATTACKLEVEL
+    {
+        get { return attackLevel; }
+    }
+
+    public int EXPLEVEL
+    {
+        get { return expLevel; }
+    }
     public GameObject MAP
     {
         get { return Map; }
@@ -133,6 +153,8 @@ public class GameManager : MonoBehaviour
         RotateWeapon = GameObject.FindGameObjectsWithTag("RotateWeapon");
         Map = GameObject.FindGameObjectWithTag("Map");
 
+        LoadLevelData();
+
         for(int i=0; i<1000; i++)
         {
             GameObject E=Instantiate(Enemy);
@@ -186,18 +208,26 @@ public class GameManager : MonoBehaviour
         
     }
 
-    private void Update()
+    void LoadLevelData()
     {
-        if(Time.timeScale==0)
+     
+        string path = $"{Application.dataPath}/Save/";
+        string fullPath = $"{path}Save.json";
+        if (Directory.Exists(path) && File.Exists(fullPath))
         {
-            //Debug.Log("게임 정지");
+            string json = File.ReadAllText(fullPath);
+            SaveData saveData = JsonUtility.FromJson<SaveData>(json);
+            healthLevel = saveData.HealthLevel;
+            attackLevel = saveData.AttackLevel;
+            expLevel = saveData.ExpLevel;
             
-            if(Input.GetKeyDown(KeyCode.A))
-            {
-                Time.timeScale = 1.0f;
-            }
         }
+
+        
     }
+
+
+
 
 
 }

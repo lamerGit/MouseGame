@@ -36,6 +36,12 @@ public class Enemy : MonoBehaviour
         hp = 10;
     }
 
+    private int HP
+    {
+        get { return hp; }
+        set { hp = value; }
+    }
+
     public bool CHOICE
     {
         set { Choice = value; }
@@ -117,6 +123,7 @@ public class Enemy : MonoBehaviour
     
     public void Hit(int damage)
     {
+        damage = damage + (damage * (int)(GameManager.INSTANCE.ATTACKLEVEL * 0.5f));
         if (GameManager.INSTANCE.DAMAGETEXTQUEUE.Count > 0 && gameObject.activeSelf)
         {
             StartCoroutine(HitAnime());
@@ -137,6 +144,7 @@ public class Enemy : MonoBehaviour
 
     public void BoardHit(int damage)
     {
+        damage = damage + (damage * (int)(GameManager.INSTANCE.ATTACKLEVEL * 0.5f));
         if (GameManager.INSTANCE.DAMAGETEXTQUEUE.Count > 0 && gameObject.activeSelf && HitDelay>HitDelayMax)
         {
             StartCoroutine(HitAnime());
