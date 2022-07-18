@@ -13,7 +13,8 @@ public class LevelUpButton : MonoBehaviour
     int health = 0;
     int attack = 0;
     int exp = 0;
-
+    int ToKen = 0;
+    public Text tokenText;
    
     private void Start()
     {
@@ -22,15 +23,17 @@ public class LevelUpButton : MonoBehaviour
             Slotimages[0].sprite = SlotSprites[health];
             Slotimages[1].sprite = SlotSprites[attack];
             Slotimages[2].sprite = SlotSprites[exp];
+            tokenText.text=$"X{ToKen}";
         }else
         {
             for(int i=0; i < Slotimages.Length; i++)
             {
                 Slotimages[i].sprite = SlotSprites[0];
             }
+            ToKen = 3;
+            tokenText.text = $"X{ToKen}";
         }
         gameObject.SetActive(false);
-        
         
     }
     public void ExitPanel()
@@ -52,6 +55,7 @@ public class LevelUpButton : MonoBehaviour
             health = saveData.HealthLevel;
             attack = saveData.AttackLevel;
             exp = saveData.ExpLevel;
+            ToKen = saveData.Token;
             result = true;
         }
 
@@ -60,78 +64,93 @@ public class LevelUpButton : MonoBehaviour
 
     public void SaveHealthData()
     {
-      
-        health++;
-        health = Mathf.Clamp(health, 0, 3);
-        SaveData saveData = new SaveData();
-        saveData.HealthLevel = health;
-        saveData.AttackLevel = attack;
-        saveData.ExpLevel = exp;
-        Slotimages[0].sprite = SlotSprites[health];
 
-        string json = JsonUtility.ToJson(saveData);
-
-        string path = $"{Application.dataPath}/Save/";
-
-        if (!Directory.Exists(path))
+        if (ToKen > 0)
         {
-            Directory.CreateDirectory(path);
-        }
+            ToKen--;
+            health++;
+            health = Mathf.Clamp(health, 0, 3);
+            SaveData saveData = new SaveData();
+            saveData.HealthLevel = health;
+            saveData.AttackLevel = attack;
+            saveData.ExpLevel = exp;
+            saveData.Token = ToKen;
+            Slotimages[0].sprite = SlotSprites[health];
+            tokenText.text = $"X{ToKen}";
+            string json = JsonUtility.ToJson(saveData);
 
-        string fullPath = $"{path}Save.json";
-        File.WriteAllText(fullPath, json);
+            string path = $"{Application.dataPath}/Save/";
+
+            if (!Directory.Exists(path))
+            {
+                Directory.CreateDirectory(path);
+            }
+
+            string fullPath = $"{path}Save.json";
+            File.WriteAllText(fullPath, json);
+        }
 
 
     }
 
     public void SaveAttackData()
     {
-        
-        attack++;
-        attack = Mathf.Clamp(attack, 0, 3);
-        SaveData saveData = new SaveData();
-        saveData.HealthLevel = health;
-        saveData.AttackLevel = attack;
-        saveData.ExpLevel = exp;
-        Slotimages[1].sprite = SlotSprites[attack];
 
-        string json = JsonUtility.ToJson(saveData);
-
-        string path = $"{Application.dataPath}/Save/";
-
-        if (!Directory.Exists(path))
+        if (ToKen > 0)
         {
-            Directory.CreateDirectory(path);
+            ToKen--;
+            attack++;
+            attack = Mathf.Clamp(attack, 0, 3);
+            SaveData saveData = new SaveData();
+            saveData.HealthLevel = health;
+            saveData.AttackLevel = attack;
+            saveData.ExpLevel = exp;
+            saveData.Token = ToKen;
+            Slotimages[1].sprite = SlotSprites[attack];
+            tokenText.text = $"X{ToKen}";
+            string json = JsonUtility.ToJson(saveData);
+
+            string path = $"{Application.dataPath}/Save/";
+
+            if (!Directory.Exists(path))
+            {
+                Directory.CreateDirectory(path);
+            }
+
+            string fullPath = $"{path}Save.json";
+            File.WriteAllText(fullPath, json);
+
         }
-
-        string fullPath = $"{path}Save.json";
-        File.WriteAllText(fullPath, json);
-
 
     }
 
     public void SaveExpData()
     {
-    
-        exp++;
-        exp = Mathf.Clamp(exp, 0, 3);
-        SaveData saveData = new SaveData();
-        saveData.HealthLevel = health;
-        saveData.AttackLevel = attack;
-        saveData.ExpLevel = exp;
-        Slotimages[2].sprite = SlotSprites[exp];
 
-        string json = JsonUtility.ToJson(saveData);
-
-        string path = $"{Application.dataPath}/Save/";
-
-        if (!Directory.Exists(path))
+        if (ToKen > 0)
         {
-            Directory.CreateDirectory(path);
-        }
+            ToKen--;
+            exp++;
+            exp = Mathf.Clamp(exp, 0, 3);
+            SaveData saveData = new SaveData();
+            saveData.HealthLevel = health;
+            saveData.AttackLevel = attack;
+            saveData.ExpLevel = exp;
+            saveData.Token = ToKen;
+            Slotimages[2].sprite = SlotSprites[exp];
+            tokenText.text = $"X{ToKen}";
+            string json = JsonUtility.ToJson(saveData);
 
-        string fullPath = $"{path}Save.json";
-        File.WriteAllText(fullPath, json);
+            string path = $"{Application.dataPath}/Save/";
+
+            if (!Directory.Exists(path))
+            {
+                Directory.CreateDirectory(path);
+            }
+
+            string fullPath = $"{path}Save.json";
+            File.WriteAllText(fullPath, json);
+        }
 
 
     }
@@ -142,13 +161,15 @@ public class LevelUpButton : MonoBehaviour
         health = 0;
         attack = 0;
         exp = 0;
+        ToKen = 3;
         saveData.HealthLevel = health;
         saveData.AttackLevel = attack;
         saveData.ExpLevel = exp;
+        saveData.Token = ToKen;
         Slotimages[0].sprite = SlotSprites[health];
         Slotimages[1].sprite = SlotSprites[attack];
         Slotimages[2].sprite = SlotSprites[exp];
-
+        tokenText.text=$"X{ToKen}";
         string json = JsonUtility.ToJson(saveData);
 
         string path = $"{Application.dataPath}/Save/";
@@ -160,6 +181,7 @@ public class LevelUpButton : MonoBehaviour
 
         string fullPath = $"{path}Save.json";
         File.WriteAllText(fullPath, json);
+        
     }
 
 }

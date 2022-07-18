@@ -9,4 +9,5 @@ public class SaveData
     public int HealthLevel;
     public int AttackLevel;
     public int ExpLevel;
+    public int Token;
 }

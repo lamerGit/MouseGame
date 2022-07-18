@@ -123,7 +123,7 @@ public class Enemy : MonoBehaviour
     
     public void Hit(int damage)
     {
-        damage = damage + (damage * (int)(GameManager.INSTANCE.ATTACKLEVEL * 0.5f));
+        damage = damage + (int)(damage * (GameManager.INSTANCE.ATTACKLEVEL * 0.5f));
         if (GameManager.INSTANCE.DAMAGETEXTQUEUE.Count > 0 && gameObject.activeSelf)
         {
             StartCoroutine(HitAnime());
@@ -144,7 +144,7 @@ public class Enemy : MonoBehaviour
 
     public void BoardHit(int damage)
     {
-        damage = damage + (damage * (int)(GameManager.INSTANCE.ATTACKLEVEL * 0.5f));
+        damage = damage + (int)(damage * (GameManager.INSTANCE.ATTACKLEVEL * 0.5f));
         if (GameManager.INSTANCE.DAMAGETEXTQUEUE.Count > 0 && gameObject.activeSelf && HitDelay>HitDelayMax)
         {
             StartCoroutine(HitAnime());
