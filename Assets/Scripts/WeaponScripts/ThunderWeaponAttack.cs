@@ -70,7 +70,8 @@ public class ThunderWeaponAttack : MonoBehaviour
 
                 transform.position = Vector3.MoveTowards(transform.position, Target.transform.position, 10.0f);
                 Target.GetComponent<Enemy>().Hit(ThunderDamage);
-                Target=null;
+                GameManager.INSTANCE.WEAPONDAMAGES[WeaponEnum.ThunderWeapon] += ThunderDamage;
+                Target =null;
                 /*if (Target.activeSelf)
                 {
 

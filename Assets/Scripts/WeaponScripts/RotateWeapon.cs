@@ -26,6 +26,7 @@ public class RotateWeapon : MonoBehaviour
         if(collision.gameObject.CompareTag("Enemy"))
         {
             collision.gameObject.GetComponent<Enemy>().Hit(RotateDamage);
+            GameManager.INSTANCE.WEAPONDAMAGES[WeaponEnum.RotateWeapon] += RotateDamage;
         }
     }
 

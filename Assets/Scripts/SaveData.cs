@@ -10,4 +10,6 @@ public class SaveData
     public int AttackLevel;
     public int ExpLevel;
     public int Token;
+    public int[] WeaponName;
+    public int[] WeaponDamage;
 }

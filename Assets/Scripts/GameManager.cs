@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
+using System.Linq;
 
 public class GameManager : MonoBehaviour
 {
@@ -41,6 +42,11 @@ public class GameManager : MonoBehaviour
     private int healthLevel = 0;
     private int attackLevel = 0;
     private int expLevel = 0;
+    private int Token = 0;
+
+    private Dictionary<WeaponEnum, int> WeaponDamages= new Dictionary<WeaponEnum, int>();
+
+    
     public static GameManager INSTANCE
     {
         get
@@ -49,6 +55,11 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    public Dictionary<WeaponEnum,int> WEAPONDAMAGES
+    {
+        get { return WeaponDamages; }
+        set { WeaponDamages = value; }
+    }
 
     public int HEALTHLEVEL
     {
@@ -137,7 +148,7 @@ public class GameManager : MonoBehaviour
         {
             instance = this;
 
-            DontDestroyOnLoad(gameObject);
+            //DontDestroyOnLoad(gameObject);
         }
         else
         {
@@ -205,7 +216,11 @@ public class GameManager : MonoBehaviour
             ExpQueue.Enqueue(E);
         }
 
-        
+        foreach(WeaponEnum i in System.Enum.GetValues(typeof(WeaponEnum)))
+        {
+            WeaponDamages.Add(i, 0);
+        }
+       
     }
 
     void LoadLevelData()
@@ -220,13 +235,51 @@ public class GameManager : MonoBehaviour
             healthLevel = saveData.HealthLevel;
             attackLevel = saveData.AttackLevel;
             expLevel = saveData.ExpLevel;
+            Token = saveData.Token;
             
         }
 
         
     }
 
+    public void SaveDamges()
+    {
+        foreach(var i in WeaponDamages)
+        {
+            Debug.Log($"Weapon = {i.Key} , Damages = {i.Value}");
+        }
 
+        SaveData saveData = new();
+        int[] weaponName = new int[System.Enum.GetValues(typeof(WeaponEnum)).Length];
+        int[] weaponDamage = new int[System.Enum.GetValues(typeof(WeaponEnum)).Length];
+        int count = 0;
+        var order = WeaponDamages.OrderByDescending(x => x.Value);
+
+        foreach(var i in order)
+        {
+            weaponName[count] =(int) i.Key;
+            weaponDamage[count] =i.Value;
+            count++;
+        }
+        saveData.HealthLevel = healthLevel;
+        saveData.AttackLevel = attackLevel;
+        saveData.ExpLevel = expLevel;
+        saveData.Token = Token;
+        saveData.WeaponName = weaponName;
+        saveData.WeaponDamage = weaponDamage;
+
+        string json = JsonUtility.ToJson(saveData);     
+
+        string path = $"{Application.dataPath}/Save/";  
+        if (!Directory.Exists(path))           
+        {
+            Directory.CreateDirectory(path);    
+        }
+
+        string fullPath = $"{path}Save.json";   
+        File.WriteAllText(fullPath, json);
+
+    }
 
 
 

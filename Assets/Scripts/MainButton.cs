@@ -8,7 +8,7 @@ public class MainButton : MonoBehaviour
     public GameObject LevelUpPanel;
     public void Stage1()
     {
-        SceneManager.LoadScene(0);
+        SceneManager.LoadScene((int)StageEnum.Stage_01);
     }
 
     public void OnLevelUpPanel()

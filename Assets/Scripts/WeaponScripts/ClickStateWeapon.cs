@@ -31,6 +31,7 @@ public class ClickStateWeapon : MonoBehaviour
                 foreach (GameObject enemy in EnemyList)
                 {
                     enemy.GetComponent<Enemy>().Hit(ClickStateDamage);
+                    GameManager.INSTANCE.WEAPONDAMAGES[WeaponEnum.ClickStateWeapon] += ClickStateDamage;
 
                 }
                 HitDelay = 0.0f;

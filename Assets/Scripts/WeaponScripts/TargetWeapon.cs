@@ -23,6 +23,7 @@ public class TargetWeapon : MonoBehaviour
                 targetSprite.SetActive(true);
                 targetSprite.transform.position = enemy.transform.position;
                 enemy.GetComponent<Enemy>().Hit(TargetDamage);
+                GameManager.INSTANCE.WEAPONDAMAGES[WeaponEnum.TargetWeapon] += TargetDamage;
             }
             cnt++;
         }

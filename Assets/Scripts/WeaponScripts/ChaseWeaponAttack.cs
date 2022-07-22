@@ -10,6 +10,7 @@ public class ChaseWeaponAttack : MonoBehaviour
         if(collision.CompareTag("Enemy"))
         {
             collision.gameObject.GetComponent<Enemy>().Hit(ChaseWeaponDamage);
+            GameManager.INSTANCE.WEAPONDAMAGES[WeaponEnum.ChaseWeapon] += ChaseWeaponDamage;
         }
     }
 }

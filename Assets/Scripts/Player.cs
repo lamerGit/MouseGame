@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class Player : MonoBehaviour
 {
@@ -25,12 +26,25 @@ public class Player : MonoBehaviour
     
     public GameObject LevelButtonEx=null;
 
+
+    bool isLive = true;
+
     private float CURRENTHP
     {
         get { return currentHp; }
         set {
             currentHp = Mathf.Clamp(value, 0, maxHp);
             hpimage.fillAmount = currentHp / maxHp;
+            if(currentHp<1)
+            {
+                
+                if (isLive)
+                {
+                    isLive = false;
+                    GameManager.INSTANCE.SaveDamges();
+                    SceneManager.LoadScene((int)StageEnum.GameOver);
+                }
+            }
 
         }
     }
@@ -42,7 +56,7 @@ public class Player : MonoBehaviour
     public float CURRENTEXP
     {
         set { currentExp = value;
-            Debug.Log(currentExp);
+            //Debug.Log(currentExp);
             ExpImage.fillAmount = currentExp / maxExp;
             LevelUp();
         }

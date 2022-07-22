@@ -13,6 +13,7 @@ public class ChargeWeapon : MonoBehaviour
         foreach (GameObject enemy in EnemyList)
         {
             enemy.GetComponent<Enemy>().Hit(ChargeDamage);
+            GameManager.INSTANCE.WEAPONDAMAGES[WeaponEnum.ChargeWeapon] += ChargeDamage;
         }
     }
 

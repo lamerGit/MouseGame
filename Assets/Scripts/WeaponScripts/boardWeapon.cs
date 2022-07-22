@@ -48,7 +48,7 @@ public class boardWeapon : MonoBehaviour
         foreach (GameObject enemy in EnemyList)
         {
             enemy.gameObject.GetComponent<Enemy>().BoardHit(BoardDamage);
-            
+            GameManager.INSTANCE.WEAPONDAMAGES[WeaponEnum.BoardWeapon] += BoardDamage;
         }
         curDelay = 0.0f;
     }

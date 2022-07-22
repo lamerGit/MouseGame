@@ -74,6 +74,7 @@ public class Enemy : MonoBehaviour
             if (BooldDelay > BooldDelayMax && BooldState)
             {
                 Hit(BooldDamage);
+                GameManager.INSTANCE.WEAPONDAMAGES[WeaponEnum.BloodWeapon] += BooldDamage;
                 BooldDelay = 0.0f;
             }
 

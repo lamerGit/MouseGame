@@ -214,6 +214,7 @@ public class Mouse : MonoBehaviour
         {
             enemy.GetComponent<SpriteRenderer>().color = EnemyColor;
             enemy.GetComponent<Enemy>().Hit(MouseDamage);
+            GameManager.INSTANCE.WEAPONDAMAGES[WeaponEnum.NomalWeapon] += MouseDamage;
             enemy.GetComponent<Enemy>().CHOICE = false;
             if (SloowW)
             {
