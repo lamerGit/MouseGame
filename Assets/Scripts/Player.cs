@@ -29,6 +29,7 @@ public class Player : MonoBehaviour
 
     bool isLive = true;
 
+    Animator anim;
     private float CURRENTHP
     {
         get { return currentHp; }
@@ -42,11 +43,19 @@ public class Player : MonoBehaviour
                 {
                     isLive = false;
                     GameManager.INSTANCE.SaveDamges();
-                    SceneManager.LoadScene((int)StageEnum.GameOver);
+                    anim.SetTrigger("Die");
+                    StartCoroutine(Die());
+                    
                 }
             }
 
         }
+    }
+
+    IEnumerator Die()
+    {
+        yield return new WaitForSeconds(1.5f);
+        SceneManager.LoadScene((int)StageEnum.GameOver);
     }
     public bool[] BUTTONBOOL
     {
@@ -64,6 +73,7 @@ public class Player : MonoBehaviour
     }
     private void Awake()
     {
+        anim = GetComponent<Animator>();
         LevelButton = new LevelButton[ButtonGruop.transform.childCount];
         for(int i=0; i< ButtonGruop.transform.childCount; i++)
         {
