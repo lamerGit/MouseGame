@@ -45,9 +45,21 @@ public class boardWeapon : MonoBehaviour
 
     void Attack()
     {
-        foreach (GameObject enemy in EnemyList)
+        /*foreach (GameObject enemy in EnemyList)
         {
             enemy.gameObject.GetComponent<Enemy>().BoardHit(BoardDamage);
+            GameManager.INSTANCE.WEAPONDAMAGES[WeaponEnum.BoardWeapon] += BoardDamage;
+        }*/
+
+        /*for(int i=0; i<EnemyList.Count; i++)
+        {
+            EnemyList[i].gameObject.GetComponent<Enemy>().BoardHit(BoardDamage);
+            GameManager.INSTANCE.WEAPONDAMAGES[WeaponEnum.BoardWeapon] += BoardDamage;
+        }*/
+
+        for (int i = EnemyList.Count - 1; i >= 0; i--)
+        {
+            EnemyList[i].gameObject.GetComponent<Enemy>().BoardHit(BoardDamage);
             GameManager.INSTANCE.WEAPONDAMAGES[WeaponEnum.BoardWeapon] += BoardDamage;
         }
         curDelay = 0.0f;

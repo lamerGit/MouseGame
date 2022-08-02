@@ -16,11 +16,19 @@ public class EnemySpawner : MonoBehaviour
             if(GameManager.INSTANCE.ENEMYQUEUE.Count>0)
             {
                 GameObject E=GameManager.INSTANCE.ENEMYQUEUE.Dequeue();
+                Enemy EG=E.GetComponent<Enemy>();
                 //Debug.Log($"{GameManager.INSTANCE.ENEMYQUEUE.Count}");
                 //Debug.Log($"{GameManager.INSTANCE.DAMAGETEXTQUEUE.Count}");
                 E.GetComponent<SpriteRenderer>().color = Color.white;
-                E.GetComponent<Enemy>().BOOLDSTATE = false;
-                E.GetComponent<Enemy>().CHOICE = false;
+                EG.BOOLDSTATE = false;
+                EG.CHOICE = false;
+                EG.HP = EG.MAXHP + GameManager.INSTANCE.ENEMYEXTRAHP;
+               // E.GetComponent<Enemy>().BOOLDSTATE = false;
+               // E.GetComponent<Enemy>().CHOICE = false;
+               // E.GetComponent<Enemy>().HP = E.GetComponent<Enemy>().MAXHP + GameManager.INSTANCE.ENEMYEXTRAHP;
+
+
+
                 E.SetActive(true);
                 E.transform.SetParent(null);
                 E.transform.position = transform.position;

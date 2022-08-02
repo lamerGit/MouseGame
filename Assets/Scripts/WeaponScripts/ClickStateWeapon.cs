@@ -28,13 +28,27 @@ public class ClickStateWeapon : MonoBehaviour
 
             if (HitDelay > HitDelayMax && ClickState)
             {
-                foreach (GameObject enemy in EnemyList)
+                /*foreach (GameObject enemy in EnemyList)
                 {
                     enemy.GetComponent<Enemy>().Hit(ClickStateDamage);
                     GameManager.INSTANCE.WEAPONDAMAGES[WeaponEnum.ClickStateWeapon] += ClickStateDamage;
 
+                }*/
+
+                /*for(int i=0; i < EnemyList.Count; i++)
+                {
+                    EnemyList[i].GetComponent<Enemy>().Hit(ClickStateDamage);
+                    GameManager.INSTANCE.WEAPONDAMAGES[WeaponEnum.ClickStateWeapon] += ClickStateDamage;
+                }*/
+
+                for (int i = EnemyList.Count - 1; i >= 0; i--)
+                {
+                    EnemyList[i].GetComponent<Enemy>().Hit(ClickStateDamage);
+                    GameManager.INSTANCE.WEAPONDAMAGES[WeaponEnum.ClickStateWeapon] += ClickStateDamage;
                 }
+
                 HitDelay = 0.0f;
+
             }
         }
     }

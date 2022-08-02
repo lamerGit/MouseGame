@@ -46,6 +46,21 @@ public class GameManager : MonoBehaviour
 
     private Dictionary<WeaponEnum, int> WeaponDamages= new Dictionary<WeaponEnum, int>();
 
+    private int EnemyExtraHp = 0;
+
+    public GameObject Enemy2;
+    private Queue<GameObject> Enemy2Queue = new Queue<GameObject>();
+
+    public Queue<GameObject> ENEMY2QUEUE
+    {
+        get { return Enemy2Queue; }
+    }
+
+    public int ENEMYEXTRAHP
+    {
+        get { return EnemyExtraHp; }
+        set { EnemyExtraHp = value; }
+    }
     
     public static GameManager INSTANCE
     {
@@ -219,6 +234,13 @@ public class GameManager : MonoBehaviour
         foreach(WeaponEnum i in System.Enum.GetValues(typeof(WeaponEnum)))
         {
             WeaponDamages.Add(i, 0);
+        }
+
+        for(int i=0; i<300; i++)
+        {
+            GameObject E2 = Instantiate(Enemy2);
+            E2.SetActive(false);
+            Enemy2Queue.Enqueue(E2);
         }
        
     }

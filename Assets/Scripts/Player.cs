@@ -11,7 +11,7 @@ public class Player : MonoBehaviour
     public float currentHp;
 
     public Image ExpImage;
-    private float maxExp=50.0f;
+    private float maxExp=30.0f;
     private float currentExp=0.0f;
 
     //public Button SkilButton1 = null;
@@ -30,6 +30,11 @@ public class Player : MonoBehaviour
     bool isLive = true;
 
     Animator anim;
+
+    public bool ISLIVE
+    {
+        get { return isLive; }
+    }
     private float CURRENTHP
     {
         get { return currentHp; }
@@ -93,7 +98,7 @@ public class Player : MonoBehaviour
 
     void LevelUp()
     {
-        if (currentExp > maxExp)
+        if (currentExp > maxExp && isLive)
         {
             Level++;
             // Debug.Log("·¹º§¾÷");

@@ -45,7 +45,7 @@ public class Mouse : MonoBehaviour
     public GameObject Weapon5 = null; // ClickStateWeapon¿ª «“¥Á
     private bool ClickStateW = false;
 
-
+    Player PlayerCheck;
     public bool CLICKSTATEW
     {
         get { return ClickStateW; }
@@ -89,10 +89,14 @@ public class Mouse : MonoBehaviour
         get { return ThunderW; }
         set { ThunderW = value; }
     }
-    
+
+    private void Start()
+    {
+        PlayerCheck = GameManager.INSTANCE.PLAYER.GetComponent<Player>();
+    }
     private void Update()
     {
-        if (Time.timeScale != 0)
+        if (Time.timeScale != 0 && PlayerCheck.ISLIVE )
         {
             MouseMove();
 

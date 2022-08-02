@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class ChaseWeaponAttack : MonoBehaviour
 {
-    private int ChaseWeaponDamage = 3;
+    private int ChaseWeaponDamage = 10;
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if(collision.CompareTag("Enemy"))

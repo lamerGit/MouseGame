@@ -7,39 +7,62 @@ public class Enemy : MonoBehaviour
 {
     Vector3 moveVelocityX=Vector3.zero;
     Vector3 moveVelocityY=Vector3.zero;
-    Vector3 PlayerPos=Vector3.zero;
+    protected Vector3 PlayerPos=Vector3.zero;
 
     float[] RandLocal = new float[2] { 10f, -10f };
 
-    private int MaxHp = 10;
-    private int hp = 10;
+    protected int MaxHp = 10;
+    protected int hp = 10;
 
-    private float HitDelayMax=0.5f;
-    private float HitDelay = 0.0f;
+    protected float HitDelayMax=0.5f;
+    protected float HitDelay = 0.0f;
 
     private float Speed = 1.0f;
 
-    private bool BooldState = false;
-    private float BooldDelayMax = 1.0f;
-    private float BooldDelay = 0.0f;
-    private int BooldDamage = 1;
+    protected bool BooldState = false;
+    protected float BooldDelayMax = 1.0f;
+    protected float BooldDelay = 0.0f;
+    protected int BooldDamage = 1;
 
     SpriteRenderer sp = null;
 
     private bool Choice = false;
+
+    protected Rigidbody2D rb2d;
     private void Awake()
     {
         sp=GetComponent<SpriteRenderer>();
+        rb2d = GetComponent<Rigidbody2D>();
     }
-    private void Start()
-    {
-        hp = 10;
-    }
+    
 
-    private int HP
+    public int MAXHP
+    {
+        get { return MaxHp; }
+    }
+    public virtual int HP // 나중에 Enemy2용으로 따로 만들어야함
     {
         get { return hp; }
-        set { hp = value; }
+        set { hp = value;
+
+            if (hp < 1)
+            {
+                hp = MaxHp;
+                GameManager.INSTANCE.ENEMYQUEUE.Enqueue(gameObject);
+                if (GameManager.INSTANCE.EXPQUEUE.Count > 0)
+                {
+                    GameObject ExpDrop = GameManager.INSTANCE.EXPQUEUE.Dequeue();
+                    ExpDrop.transform.position = transform.position;
+                    ExpDrop.SetActive(true);
+                }
+                //BooldState = false;
+                //Choice = false;
+                //sp.color = Color.red;
+                gameObject.SetActive(false);
+            }
+
+
+        }
     }
 
     public bool CHOICE
@@ -57,7 +80,7 @@ public class Enemy : MonoBehaviour
     public bool BOOLDSTATE
     { set { BooldState = value; } }
 
-    private void FixedUpdate()
+    protected virtual void FixedUpdate()
     {
         if (Time.timeScale != 0)
         {
@@ -78,26 +101,12 @@ public class Enemy : MonoBehaviour
                 BooldDelay = 0.0f;
             }
 
-            if (hp < 1)
-            {
-                hp = MaxHp;
-                GameManager.INSTANCE.ENEMYQUEUE.Enqueue(gameObject);
-                if (GameManager.INSTANCE.EXPQUEUE.Count > 0)
-                {
-                    GameObject ExpDrop = GameManager.INSTANCE.EXPQUEUE.Dequeue();
-                    ExpDrop.transform.position = transform.position;
-                    ExpDrop.SetActive(true);
-                }
-                //BooldState = false;
-                //Choice = false;
-                //sp.color = Color.red;
-                gameObject.SetActive(false);
-            }
+            
             tele();
         }
     }
 
-    void searchPlayer()
+    protected virtual void searchPlayer()
     {
         PlayerPos = GameManager.INSTANCE.PLAYER.transform.position;
         if (PlayerPos.x < transform.position.x)
@@ -135,7 +144,7 @@ public class Enemy : MonoBehaviour
             DamageText.transform.position = Camera.main.WorldToScreenPoint(new Vector3(transform.position.x + 1.0f, transform.position.y+y, transform.position.z));
 
             DamageText.GetComponent<Text>().text = damage.ToString();
-            hp -= damage;
+            HP -= damage;
             if(GameManager.INSTANCE.MOUSE.GetComponent<Mouse>().BLOODW && !BooldState)
             {
                 BooldState = true;
@@ -157,7 +166,7 @@ public class Enemy : MonoBehaviour
 
             DamageText.GetComponent<Text>().text = damage.ToString();
             HitDelay = 0.0f;
-            hp -= damage;
+            HP -= damage;
             if (GameManager.INSTANCE.MOUSE.GetComponent<Mouse>().BLOODW && !BooldState)
             {
                 BooldState = true;
