@@ -10,6 +10,12 @@ public class TimeScript : MonoBehaviour
     string TimeText = "";
 
     float GameLevelTimer = 0.0f;
+
+    public float TIMER
+    {
+        get { return timer; }
+    }
+
     private void Awake()
     {
         text = GetComponent<Text>();

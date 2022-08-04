@@ -51,6 +51,14 @@ public class GameManager : MonoBehaviour
     public GameObject Enemy2;
     private Queue<GameObject> Enemy2Queue = new Queue<GameObject>();
 
+    TimeScript timeScript;
+
+
+    public TimeScript TIMESCRIPT
+    {
+        get { return timeScript; }
+    }
+
     public Queue<GameObject> ENEMY2QUEUE
     {
         get { return Enemy2Queue; }
@@ -178,6 +186,7 @@ public class GameManager : MonoBehaviour
         Mouse = GameObject.FindGameObjectWithTag("Mouse");
         RotateWeapon = GameObject.FindGameObjectsWithTag("RotateWeapon");
         Map = GameObject.FindGameObjectWithTag("Map");
+        timeScript=FindObjectOfType<TimeScript>();
 
         LoadLevelData();
 
@@ -236,7 +245,7 @@ public class GameManager : MonoBehaviour
             WeaponDamages.Add(i, 0);
         }
 
-        for(int i=0; i<300; i++)
+        for(int i=0; i<400; i++)
         {
             GameObject E2 = Instantiate(Enemy2);
             E2.SetActive(false);

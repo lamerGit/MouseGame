@@ -11,7 +11,7 @@ public class Player : MonoBehaviour
     public float currentHp;
 
     public Image ExpImage;
-    private float maxExp=30.0f;
+    private float maxExp=100.0f;
     private float currentExp=0.0f;
 
     //public Button SkilButton1 = null;
@@ -103,7 +103,7 @@ public class Player : MonoBehaviour
             Level++;
             // Debug.Log("·¹º§¾÷");
             currentExp = 0.0f;
-            maxExp *= 1.5f;
+            maxExp *= 1.6f;
             ButtonGruop.gameObject.SetActive(true);
             LevelButtonEx.SetActive(true);
             if (Level < ButtonSprite.Length - 3)

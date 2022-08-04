@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class EnemySpawner : MonoBehaviour
 {
+    public float startTime = 200.0f;
     private void Start()
     {
         StartCoroutine(Spawner());
@@ -13,7 +14,7 @@ public class EnemySpawner : MonoBehaviour
     {
         while(true)
         {
-            if(GameManager.INSTANCE.ENEMYQUEUE.Count>0)
+            if(GameManager.INSTANCE.ENEMYQUEUE.Count>0 && GameManager.INSTANCE.TIMESCRIPT.TIMER<startTime)
             {
                 GameObject E=GameManager.INSTANCE.ENEMYQUEUE.Dequeue();
                 Enemy EG=E.GetComponent<Enemy>();

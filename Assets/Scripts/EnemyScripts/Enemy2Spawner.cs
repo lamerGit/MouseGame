@@ -13,9 +13,10 @@ public class Enemy2Spawner : MonoBehaviour
     {
         while (true)
         {
-            if (GameManager.INSTANCE.ENEMY2QUEUE.Count > 20)
+            yield return new WaitForSeconds(30.0f);
+            if (GameManager.INSTANCE.ENEMY2QUEUE.Count > 40)
             {
-                for (int i = 0; i < 20; i++)
+                for (int i = 0; i < 40; i++)
                 {
                     GameObject E = GameManager.INSTANCE.ENEMY2QUEUE.Dequeue();
                     Enemy EG = E.GetComponent<Enemy>();
@@ -33,7 +34,7 @@ public class Enemy2Spawner : MonoBehaviour
                     E.transform.position = new Vector2(transform.position.x + randX, transform.position.y + randy);
                 }
             }
-            yield return new WaitForSeconds(15.0f);
+           
         }
     }
 }

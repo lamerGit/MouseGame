@@ -9,7 +9,7 @@ public class WeaponDamage_UI : MonoBehaviour
     Text WeaponDamageText;
     Image WeaponGauge;
 
-    float MaxDamage = 1000;
+    float MaxDamage = 5000.0f;
     
     public void SetDamageUI(Sprite WeaponSprite,float Damage)
     {
