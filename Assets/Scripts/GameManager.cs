@@ -10,11 +10,12 @@ public class GameManager : MonoBehaviour
 
     private GameObject Player = null; //플레이어 미리 찾아놓기위한 변수
     private GameObject Mouse = null; // 마우스 미리 찾아놓기위한 변수
+    private Canvas canvas; // 캔버스 찾아놓기 위한 변수
 
+    //미리 만들어 놓기위한 변수와 큐ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
     public GameObject Enemy = null; 
     private Queue<GameObject> EnemyQueue= new Queue<GameObject>();
 
-    private Canvas canvas; // 캔버스 찾아놓기 위한 변수
     public GameObject DamageText = null;
     private Queue<GameObject> DamageTextQueue= new Queue<GameObject>();
 
@@ -35,25 +36,31 @@ public class GameManager : MonoBehaviour
 
     private GameObject[] RotateWeapon = new GameObject[2];
 
-    private bool GamePause = false;
+    public GameObject Enemy2;
+    private Queue<GameObject> Enemy2Queue = new Queue<GameObject>();
+    //ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
 
-    private GameObject Map = null;
+    private bool GamePause = false; //게임 정지상태를 확인할 변수
 
+    private GameObject Map = null; //맵 오브젝트를 미리찾아둘 변수
+
+
+    //세이브데이터들ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
     private int healthLevel = 0;
     private int attackLevel = 0;
     private int expLevel = 0;
     private int Token = 0;
+    //ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
 
-    private Dictionary<WeaponEnum, int> WeaponDamages= new Dictionary<WeaponEnum, int>();
+    private Dictionary<WeaponEnum, int> WeaponDamages= new Dictionary<WeaponEnum, int>(); // 데미지별로 저장하기위한 변수
 
-    private int EnemyExtraHp = 0;
+    private int EnemyExtraHp = 0; // 시간이 지날수록 적의 체력을 증가시켜줄 변수
 
-    public GameObject Enemy2;
-    private Queue<GameObject> Enemy2Queue = new Queue<GameObject>();
+    
 
-    TimeScript timeScript;
+    TimeScript timeScript; // TimeScript를 미리찾아두기 위한 변수
 
-
+    //프로퍼티ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
     public TimeScript TIMESCRIPT
     {
         get { return timeScript; }
@@ -164,9 +171,11 @@ public class GameManager : MonoBehaviour
     {
         get { return Mouse; }
     }
+    //프로퍼티ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
 
     private void Awake()
     {
+        //싱글톤 작업
         if(instance==null)
         {
             instance = this;
@@ -180,7 +189,7 @@ public class GameManager : MonoBehaviour
                 Destroy(gameObject);
             }
         }
-
+        // 오브젝트 미리찾아두기
         Player = GameObject.FindGameObjectWithTag("Player");
         canvas=GameObject.FindGameObjectWithTag("Canvas").gameObject.GetComponent<Canvas>();
         Mouse = GameObject.FindGameObjectWithTag("Mouse");
@@ -188,8 +197,10 @@ public class GameManager : MonoBehaviour
         Map = GameObject.FindGameObjectWithTag("Map");
         timeScript=FindObjectOfType<TimeScript>();
 
-        LoadLevelData();
+        
+        LoadLevelData(); // 데이터불러오기
 
+        //오브젝트 미리 만들어서 queue에 할당
         for(int i=0; i<1000; i++)
         {
             GameObject E=Instantiate(Enemy);
@@ -254,6 +265,7 @@ public class GameManager : MonoBehaviour
        
     }
 
+    //데이터를 불러오는 함수
     void LoadLevelData()
     {
      
@@ -272,13 +284,13 @@ public class GameManager : MonoBehaviour
 
         
     }
-
+    //저장되었던 데미지총합을 순서대로 정렬하여 저장하는 함수
     public void SaveDamges()
     {
-        foreach(var i in WeaponDamages)
-        {
-            Debug.Log($"Weapon = {i.Key} , Damages = {i.Value}");
-        }
+        //foreach(var i in WeaponDamages)
+        //{
+        //    Debug.Log($"Weapon = {i.Key} , Damages = {i.Value}");
+        //}
 
         SaveData saveData = new();
         int[] weaponName = new int[System.Enum.GetValues(typeof(WeaponEnum)).Length];

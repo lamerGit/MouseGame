@@ -6,18 +6,18 @@ using UnityEngine.SceneManagement;
 
 public class Player : MonoBehaviour
 {
+    //플레이어 스크립트
+
     public Image hpimage;
     public float maxHp;
     public float currentHp;
 
     public Image ExpImage;
-    private float maxExp=100.0f;
+    private float maxExp=70.0f;
     private float currentExp=0.0f;
 
-    //public Button SkilButton1 = null;
     public GameObject ButtonGruop = null;
     LevelButton[] LevelButton;
-    //string[] ButtonName = new string[11] { "PW", "BW", "TW","THW","CW","SW","BLW","CSW","CAW","RW","G" };
     public Sprite[] ButtonSprite;
     private bool[] ButtonBool=new bool[11] {false,false,false,false, false, false, false, false ,false,false,true};
 
@@ -31,11 +31,11 @@ public class Player : MonoBehaviour
 
     Animator anim;
 
-    public bool ISLIVE
+    public bool ISLIVE //생존확인용 프로퍼티
     {
         get { return isLive; }
     }
-    private float CURRENTHP
+    public float CURRENTHP //체력확인용 프로퍼티 
     {
         get { return currentHp; }
         set {
@@ -57,7 +57,7 @@ public class Player : MonoBehaviour
         }
     }
 
-    IEnumerator Die()
+    IEnumerator Die() // 죽게되면 1.5초뒤 게임오버화면으로 이동
     {
         yield return new WaitForSeconds(1.5f);
         SceneManager.LoadScene((int)StageEnum.GameOver);
@@ -76,7 +76,7 @@ public class Player : MonoBehaviour
         }
         get { return currentExp; }
     }
-    private void Awake()
+    private void Awake() //시작할때 레벨업했을때 나타나는 버튼을 미리 할당
     {
         anim = GetComponent<Animator>();
         LevelButton = new LevelButton[ButtonGruop.transform.childCount];
@@ -98,12 +98,14 @@ public class Player : MonoBehaviour
 
     void LevelUp()
     {
+
+        //레벨업시 현재가지고 있는 무기를 체크하고 랜덤하게 무기를 표시해준다.
         if (currentExp > maxExp && isLive)
         {
             Level++;
             // Debug.Log("레벨업");
             currentExp = 0.0f;
-            maxExp *= 1.6f;
+            maxExp *= 1.6f; // 레벨업시 다음레벨을 위한 경험치흭득량을 높힌다.
             ButtonGruop.gameObject.SetActive(true);
             LevelButtonEx.SetActive(true);
             if (Level < ButtonSprite.Length - 3)
@@ -143,9 +145,7 @@ public class Player : MonoBehaviour
                     RandomChoice.Add(ButtonSprite.Length - 1);
                 }
             }
-            //Debug.Log(RandomChoice.Count);
-            //LevelButton1.BUTTONNUMBER = 0;
-            //LevelButton1.t.text = "PW";
+
             for (int i = 0; i < ButtonGruop.transform.childCount; i++)
             {
 
@@ -157,7 +157,7 @@ public class Player : MonoBehaviour
 
         }
     }
-
+    //적들과 닿으면 데미지
     private void OnCollisionStay2D(Collision2D collision)
     {
         if(collision.gameObject.CompareTag("Enemy"))

@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
-
+//세이브용 클래스
 [Serializable]
 public class SaveData 
 {

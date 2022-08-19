@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class PushWeapon : MonoBehaviour
 {
+    //적들을 밀어내는 스크립트
     List<GameObject> EnemyList = new List<GameObject>();
     private float PushPower = 1.5f;
     Animator anime;
@@ -15,6 +16,7 @@ public class PushWeapon : MonoBehaviour
 
     public IEnumerator PushAttack()
     {
+        //적들이 플레이어 기준 어디에 있는지 확인해서 그방향으로 밀어낸다.
         yield return new WaitForSeconds(1.5f);
         anime.SetTrigger("Attack");
         foreach(var enemy in EnemyList)
@@ -43,13 +45,12 @@ public class PushWeapon : MonoBehaviour
     {
         if(collision.CompareTag("Enemy"))
         {
-            EnemyList.Add(collision.gameObject);
-            //Debug.Log("적이 들어옴");
+            EnemyList.Add(collision.gameObject); // 적이 콜라이더에 들어오면 리스트에추가
         }
     }
     private void OnTriggerExit2D(Collider2D collision)
     {
-        if(collision.CompareTag("Enemy"))
+        if(collision.CompareTag("Enemy")) // 적이 콜라이더에서 나가면 리스트에서 제거
         {
             EnemyList.Remove(collision.gameObject);
         }

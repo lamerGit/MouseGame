@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class TargetWeaponSprite : MonoBehaviour
 {
+    //X표시를 해주고 일정시간뒤 사라지는 스크립트
     private float MaxDelay = 1.0f;
     private float curDelay = 0.0f;
 

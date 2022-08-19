@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class PerlinNoiseMap : MonoBehaviour
 {
+
+    //PerlinNoiseMap을 이용해 타일을 미리 만들어두는 스크립트
     Dictionary<int, GameObject> tileset;
     Dictionary<int, GameObject> tile_groups;
 
@@ -12,8 +14,9 @@ public class PerlinNoiseMap : MonoBehaviour
     public GameObject prefab_2;
     public GameObject prefab_3;
 
-    int map_width = 16000;
-    int map_height = 9000;
+    //맵의크기
+    int map_width = 16000;  
+    int map_height = 9000;  
 
     List<List<int>> noise_grid = new List<List<int>>();
     List<List<GameObject>> tile_grid=new List<List<GameObject>>();
@@ -36,33 +39,11 @@ public class PerlinNoiseMap : MonoBehaviour
 
     private void Update()
     {
-        /*if(Input.GetMouseButtonDown(0))
-        {
-            Vector3 mPosition = Input.mousePosition;
-            Vector3 target = Camera.main.ScreenToWorldPoint(mPosition);
-            Debug.Log($"{(int)target.x+ (map_width * 0.5f)} , {(int)target.y+ (map_height * 0.5f)}");
-            int X = (int)target.x + (int)(map_width * 0.5f);
-            int Y = (int)target.y + (int)(map_height * 0.5f);
-            
-            
-            for(int i=X-10; i<X+10; i++)
-            {
-                for(int j=Y-10; j<Y+10; j++)
-                {
-                    if (noise_grid[i][j] == -1)
-                    {
-                        int tile_id = GetIdUsingPerlin(i, j);
-                        noise_grid[i][j] = tile_id;
-                        CreateTile(tile_id, i, j);
-                    }
-                    
-                }
-            }
-        }*/
+        
     }
 
     
-
+    //플레이어가 근처로 가면 타일을 생성한다.
     public void PlayerBackGround()
     {
         int X = (int)GameManager.INSTANCE.PLAYER.transform.position.x + (int)(map_width * 0.5f);

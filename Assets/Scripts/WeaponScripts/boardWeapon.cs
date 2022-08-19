@@ -4,12 +4,13 @@ using UnityEngine;
 
 public class boardWeapon : MonoBehaviour
 {
+    //장판공격을 하는 스크립트
     private int BoardDamage = 1;
     private float MaxDelay = 0.5f;
     private float curDelay = 0.0f;
 
     private List<GameObject> EnemyList=new List<GameObject>();
-    private bool Stt = false;
+    private bool Stt = false; //시작되면 true로 변할 변수
     SpriteRenderer sp = null;
 
     private void Awake()
@@ -19,7 +20,7 @@ public class boardWeapon : MonoBehaviour
 
     private void Update()
     {
-        if (Time.timeScale != 0)
+        if (Time.timeScale != 0) // 시간이 멈추면 작동이 안되게 설정
         {
             curDelay += Time.deltaTime;
             if (curDelay > MaxDelay && Stt)
@@ -28,7 +29,7 @@ public class boardWeapon : MonoBehaviour
             }
         }
     }
-    public IEnumerator BA()
+    public IEnumerator BA() // 일정시간후 게임매니저에 돌려주고 비활성화
     {
         yield return new WaitForSeconds(1.5f);
         
@@ -43,31 +44,20 @@ public class boardWeapon : MonoBehaviour
         Stt = true;
     }
 
-    void Attack()
+    void Attack() //공격이 시작되면 리스트에 있는 모든적을 공격한다.
     {
-        /*foreach (GameObject enemy in EnemyList)
-        {
-            enemy.gameObject.GetComponent<Enemy>().BoardHit(BoardDamage);
-            GameManager.INSTANCE.WEAPONDAMAGES[WeaponEnum.BoardWeapon] += BoardDamage;
-        }*/
-
-        /*for(int i=0; i<EnemyList.Count; i++)
-        {
-            EnemyList[i].gameObject.GetComponent<Enemy>().BoardHit(BoardDamage);
-            GameManager.INSTANCE.WEAPONDAMAGES[WeaponEnum.BoardWeapon] += BoardDamage;
-        }*/
 
         for (int i = EnemyList.Count - 1; i >= 0; i--)
         {
             EnemyList[i].gameObject.GetComponent<Enemy>().BoardHit(BoardDamage);
-            GameManager.INSTANCE.WEAPONDAMAGES[WeaponEnum.BoardWeapon] += BoardDamage;
+            GameManager.INSTANCE.WEAPONDAMAGES[WeaponEnum.BoardWeapon] += BoardDamage; // 데미지체크를 위해 게임메니저에 전달
         }
         curDelay = 0.0f;
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if(collision.CompareTag("Enemy"))
+        if(collision.CompareTag("Enemy")) // 적이 콜라이더에 들어오면 리스트에추가
         {
             EnemyList.Add(collision.gameObject);
         }
@@ -75,7 +65,7 @@ public class boardWeapon : MonoBehaviour
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        if (collision.CompareTag("Enemy"))
+        if (collision.CompareTag("Enemy")) // 적이 콜라이더에서 나가면 리스트에서 제거
         {
             EnemyList.Remove(collision.gameObject);
         }

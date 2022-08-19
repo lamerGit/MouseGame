@@ -46,6 +46,8 @@ public class Mouse : MonoBehaviour
     private bool ClickStateW = false;
 
     Player PlayerCheck;
+
+    //현재 가지고 있는 무기들을 확인하고 자유롭게 true로 만들어줄수 있게 해줄 프로퍼티ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
     public bool CLICKSTATEW
     {
         get { return ClickStateW; }
@@ -89,37 +91,39 @@ public class Mouse : MonoBehaviour
         get { return ThunderW; }
         set { ThunderW = value; }
     }
-
+    //ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
     private void Start()
     {
         PlayerCheck = GameManager.INSTANCE.PLAYER.GetComponent<Player>();
     }
     private void Update()
     {
+
+        //시간이 멈추지않고 플레이어가 살아있을때만 행동
         if (Time.timeScale != 0 && PlayerCheck.ISLIVE )
         {
             MouseMove();
 
-            CoolDownImage.fillAmount = Delay / DelayMax;
-            ChageImage.fillAmount = ChargeDelay / ChargeMax;
-            if (Delay < DelayMax)
+            CoolDownImage.fillAmount = Delay / DelayMax; //쿨타임 표시
+            ChageImage.fillAmount = ChargeDelay / ChargeMax; // 차지이미지 표시
+            if (Delay < DelayMax) //마우스 공격 딜레이 증가
             {
                 Delay += Time.deltaTime;
             }
 
-            if (Click && ChargeW)
+            if (Click && ChargeW) // ChargeW이 true일때만 ChargeDelay를 증가시킨다.
             {
                 ChargeDelay += Time.deltaTime;
             }
 
-            if (Click && ClickStateW)
+            if (Click && ClickStateW) // ClickStateW이 true일때만 공격이 활성화
             {
                 Weapon5.GetComponent<ClickStateWeapon>().CLICKSTATE = true;
                 Weapon5.GetComponent<ClickStateWeapon>().FireOn();
             }
 
 
-            if (Input.GetMouseButtonDown(0) && Delay > DelayMax)
+            if (Input.GetMouseButtonDown(0) && Delay > DelayMax) // 딜레이가 DelayMax를 넘고 마우스로 클릭하면 클릭상태가 된다.
             {
                 Click = true;
 
@@ -128,17 +132,22 @@ public class Mouse : MonoBehaviour
 
             }
 
-            if (Input.GetMouseButtonUp(0) && Click)
+            if (Input.GetMouseButtonUp(0) && Click) // 마우스를 때고 클릭상태일때 마우스르 땠을때 행동이 발동한다.
             {
-                GameManager.INSTANCE.MAP.GetComponent<PerlinNoiseMap>().PlayerBackGround();
+                GameManager.INSTANCE.MAP.GetComponent<PerlinNoiseMap>().PlayerBackGround(); // 플레이어주변에만 배경이 그려지게한다.
                 Click = false;
                 Delay = 0.0f;
 
+                //플레이어 이동과 공격 애니메이션작동
                 GameManager.INSTANCE.PLAYER.transform.position = transform.position;
                 Animator PlayerAnimator = GameManager.INSTANCE.PLAYER.GetComponent<Animator>();
                 PlayerAnimator.SetTrigger("Attack");
 
+
+                //무기를 집어넣는 순간 공격이되게 코루틴을 만듬
                 StartCoroutine(MouseAttack());
+
+                //무기들이 true일때 발동한다
                 if (PushW)
                 {
                     StartCoroutine(Weapon1.GetComponent<PushWeapon>().PushAttack());
@@ -176,6 +185,7 @@ public class Mouse : MonoBehaviour
         
     }
 
+    //차지가 되면 공격되게 하는 함수
     void ChargeWeaponCode()
     {
         
@@ -185,7 +195,7 @@ public class Mouse : MonoBehaviour
             StartCoroutine(Weapon4.GetComponent<ChargeWeapon>().ChargeAttack());
         }
     }
-
+    // 장판공격을 생성하고 클릭을 때면 활성화하게 해주는 함수
     void BoardWeaponCode()
     {
         if(Click && GameManager.INSTANCE.BOARDWEAPONQUEUE.Count>0)
@@ -211,6 +221,8 @@ public class Mouse : MonoBehaviour
             BoardWeaponList.Clear();
         }
     }
+
+    //마우스에 선택된 적들만 공격하게 해주는 함수
     IEnumerator MouseAttack()
     {
         yield return new WaitForSeconds(1.5f);
@@ -232,12 +244,16 @@ public class Mouse : MonoBehaviour
         }
         collEnemys.Clear();
     }
+
+    //마우스를 쫓아다니는 오브젝트
     void MouseMove()
     {
         mousePos = Input.mousePosition;
         transPos = Camera.main.ScreenToWorldPoint(mousePos);
         transform.position= new Vector3(transPos.x, transPos.y, 0);
     }
+
+    //콜라이더에 닿으면 리스트에 넣는다
 
     private void OnTriggerEnter2D(Collider2D collision)
     {

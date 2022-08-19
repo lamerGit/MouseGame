@@ -5,6 +5,7 @@ using System.IO;
 
 public class DamageRankPanel : MonoBehaviour
 {
+    // 데미지 통계를 보여주기위한 스크립트
     int[] WeaponRanks;
     int[] WeaponDamages;
 
@@ -19,7 +20,7 @@ public class DamageRankPanel : MonoBehaviour
 
     private void Start()
     {
-        LoadLevelData();
+        LoadLevelData(); //순서대로 저장되어있는 데이터를 받아와서 grid의 자식으로 넣어준다
         for(int i=0; i<WeaponSprite.Length; i++)
         {
             if (WeaponDamages[i]==0)
@@ -32,6 +33,7 @@ public class DamageRankPanel : MonoBehaviour
         }
 
     }
+    //데이터를 받아오는 함수
     void LoadLevelData()
     {
 

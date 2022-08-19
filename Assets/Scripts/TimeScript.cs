@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 public class TimeScript : MonoBehaviour
 {
+    //시간표시용 스크립트
     Text text;
     float timer = 300.0f;
 
@@ -31,10 +32,15 @@ public class TimeScript : MonoBehaviour
             TimeText = TimeText.Replace(".", ":");
             text.text = TimeText;
 
-            if(GameLevelTimer>50.0f)
+            if(GameLevelTimer>50.0f)//일정시간이 지나면 몬스터체력증가
             {
                 GameLevelTimer = 0;
-                GameManager.INSTANCE.ENEMYEXTRAHP += 20;
+                GameManager.INSTANCE.ENEMYEXTRAHP += 10;
+            }
+
+            if(GameLevelTimer>299.9f) // 시간이 다되면 플레이어가 자동으로 죽음
+            {
+                GameManager.INSTANCE.PLAYER.GetComponent<Player>().CURRENTHP -= 999;
             }
         }
 

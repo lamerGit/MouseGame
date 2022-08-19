@@ -7,6 +7,8 @@ using System.IO;
 
 public class LevelUpButton : MonoBehaviour
 {
+    //메인화면에서 업그래이드를 해주는 버튼용 스크립트
+
     public Sprite[] SlotSprites;
     public Image[] Slotimages;
 
@@ -18,6 +20,7 @@ public class LevelUpButton : MonoBehaviour
    
     private void Start()
     {
+        //게임 첫 시작시 데이터가 있으면 설정 없으면 새로 만든다.
         if(LoadGameData())
         {
             Slotimages[0].sprite = SlotSprites[health];
@@ -62,6 +65,7 @@ public class LevelUpButton : MonoBehaviour
         return result;
     }
 
+    //체력버튼용
     public void SaveHealthData()
     {
 
@@ -92,7 +96,7 @@ public class LevelUpButton : MonoBehaviour
 
 
     }
-
+    //어택버튼용
     public void SaveAttackData()
     {
 
@@ -123,7 +127,7 @@ public class LevelUpButton : MonoBehaviour
         }
 
     }
-
+    //경험치북버튼용
     public void SaveExpData()
     {
 
@@ -154,7 +158,7 @@ public class LevelUpButton : MonoBehaviour
 
 
     }
-
+    //리셋버튼용
     public void ResetButton()
     {
         SaveData saveData = new SaveData();

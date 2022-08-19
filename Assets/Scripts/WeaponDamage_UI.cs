@@ -5,6 +5,8 @@ using UnityEngine.UI;
 
 public class WeaponDamage_UI : MonoBehaviour
 {
+    //게임오버시 총 데미지를 보여줄 스크립트
+
     Image WeaponImage;
     Text WeaponDamageText;
     Image WeaponGauge;

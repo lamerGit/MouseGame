@@ -4,11 +4,11 @@ using UnityEngine;
 
 public class DamageText : MonoBehaviour
 {
-    // Start is called before the first frame update
+    //데미지 텍스트를 표시해주는 스크립트
     private float MaxDelay = 1.0f;
     private float curDelay = 0.0f;
 
-    // Update is called once per frame
+ 
     void Update()
     {
         transform.SetAsFirstSibling();
@@ -19,7 +19,7 @@ public class DamageText : MonoBehaviour
             if (curDelay > MaxDelay)
             {
                 GameManager.INSTANCE.DAMAGETEXTQUEUE.Enqueue(gameObject);
-                //Debug.Log(GameManager.INSTANCE.DAMAGETEXTQUEUE.Count);
+
                 curDelay = 0.0f;
                 gameObject.SetActive(false);
 

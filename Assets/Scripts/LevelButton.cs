@@ -6,12 +6,15 @@ using UnityEngine.EventSystems;
 
 public class LevelButton : MonoBehaviour ,IPointerEnterHandler
 {
+    //레벨업을 했을때 나오는 선택지 버튼
 
     public Text t = null;
 
     private int ButtonNumber = 0;
 
     public Text ButtonEx = null;
+
+    //ButtonNumber프로퍼티로 접근할수 있게 해야 어떤 무기를 선택했는지 알수있다.
     public int BUTTONNUMBER
     {
         set { ButtonNumber = value; }
@@ -28,6 +31,7 @@ public class LevelButton : MonoBehaviour ,IPointerEnterHandler
         transform.SetSiblingIndex(100);
     }
 
+    //ButtonNumber에 따라 무기해금
     public void SelectWeapon()
     {
         if(ButtonNumber ==0)
@@ -95,6 +99,7 @@ public class LevelButton : MonoBehaviour ,IPointerEnterHandler
 
     }
 
+    //레벨업하고 생긴 버튼들을 클릭했을때 사용되는 함수
     public void StartTime()
     {
         SelectWeapon();
@@ -104,6 +109,7 @@ public class LevelButton : MonoBehaviour ,IPointerEnterHandler
         transform.parent.gameObject.SetActive(false);
     }
 
+    // 버튼위에 마우스를 올려놨을때 설명이 나오게 해주는 함수
     public void OnPointerEnter(PointerEventData eventData)
     {
         //Debug.Log("마우스");
