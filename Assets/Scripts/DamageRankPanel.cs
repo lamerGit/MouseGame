@@ -28,6 +28,7 @@ public class DamageRankPanel : MonoBehaviour
                 break;
             }
             GameObject w = Instantiate(weaponDamage_UI);
+            w.GetComponent<WeaponDamage_UI>().MaxDamage = WeaponDamages[0];
             w.GetComponent<WeaponDamage_UI>().SetDamageUI(WeaponSprite[WeaponRanks[i]], WeaponDamages[i]);
             w.transform.SetParent(grid.transform);
         }

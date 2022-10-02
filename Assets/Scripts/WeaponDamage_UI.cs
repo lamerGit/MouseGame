@@ -11,7 +11,8 @@ public class WeaponDamage_UI : MonoBehaviour
     Text WeaponDamageText;
     Image WeaponGauge;
 
-    float MaxDamage = 5000.0f;
+    public float MaxDamage = 5000.0f;
+    float startPoint = 0.0f;
     
     public void SetDamageUI(Sprite WeaponSprite,float Damage)
     {
@@ -21,8 +22,18 @@ public class WeaponDamage_UI : MonoBehaviour
 
         WeaponImage.sprite = WeaponSprite;
         WeaponDamageText.text = $"{Damage:N0}";
-        WeaponGauge.fillAmount = Damage / MaxDamage;
+        //WeaponGauge.fillAmount = Damage / MaxDamage;
+        StartCoroutine(SlowUp(Damage));
+    }
 
+    IEnumerator SlowUp(float d)
+    {
+        while (startPoint<d)
+        {
+            WeaponGauge.fillAmount = startPoint / MaxDamage;
+            startPoint+=Time.deltaTime*1000.0f;
+            yield return new WaitForSeconds(0.001f);
+        }
     }
 
     
