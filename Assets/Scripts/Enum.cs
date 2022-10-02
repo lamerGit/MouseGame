@@ -5,8 +5,8 @@ using UnityEngine;
 //스테이지 번호 Enum
 public enum StageEnum
 {
-    Stage_01=0,
-    Main,
+    Main=0,
+    Stage_01,
     GameOver
 }
 //무기 번호 Enum
