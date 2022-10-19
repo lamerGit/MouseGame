@@ -104,6 +104,7 @@ public class LevelButton : MonoBehaviour ,IPointerEnterHandler
     {
         SelectWeapon();
         Time.timeScale = 1.0f;
+        Cursor.visible = false;
         ButtonEx.text = "";
         GameManager.INSTANCE.PLAYER.GetComponent<Player>().LevelButtonEx.SetActive(false);
         transform.parent.gameObject.SetActive(false);

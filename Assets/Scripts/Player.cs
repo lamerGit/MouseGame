@@ -154,6 +154,7 @@ public class Player : MonoBehaviour
             }
             RandomChoice.Clear();
             Time.timeScale = 0f;
+            Cursor.visible = true;
 
         }
     }

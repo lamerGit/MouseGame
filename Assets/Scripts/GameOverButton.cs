@@ -5,6 +5,12 @@ using UnityEngine.SceneManagement;
 
 public class GameOverButton : MonoBehaviour
 {
+    private void Start()
+    {
+        Cursor.visible = true;
+    }
+
+
     //게임오버됬을때 나오는 버튼에 할당해줄 함수들
     public void Restart()
     {

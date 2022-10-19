@@ -262,6 +262,8 @@ public class GameManager : MonoBehaviour
             E2.SetActive(false);
             Enemy2Queue.Enqueue(E2);
         }
+
+        Cursor.visible = false;
        
     }
 
